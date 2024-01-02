@@ -1,7 +1,10 @@
 /*
 Programa realizado por: Karina Figueroa
 */
-
+/*
+ * Cosas pendientes
+ * Hacer que al mover de arriba a abajo vaya recto, investigar porque sucede
+ */
 import javax.swing.JFrame;
 import java.awt.event.*;
 import java.awt.Graphics;
