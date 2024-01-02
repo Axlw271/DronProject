@@ -10,6 +10,8 @@ import java.awt.RenderingHints;
 import java.awt.Color;
 
 public class viborita extends JFrame implements KeyListener, ActionListener {
+	int vel = 1 ;
+	int origenX = 1, origenY = 150;
 	String cadena, letrero;
 	boolean bandera = false;
 
