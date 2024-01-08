@@ -23,7 +23,7 @@ public class menuFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new Thread(() -> {
-                    tronlike.main(null); //llamar juego
+                    tronlike.main(null); //llamar juego en otro hilo para no interferir
                 }).start();
                 dispose(); //cerrar menú
             }

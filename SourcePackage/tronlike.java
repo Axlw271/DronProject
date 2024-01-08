@@ -1,4 +1,5 @@
 package SourcePackage;
+
 /*
 Programa realizado por: Karina Figueroa
 */
@@ -14,14 +15,18 @@ import java.awt.RenderingHints;
 import java.awt.Color;
 
 public class tronlike extends JFrame implements KeyListener, ActionListener {
-	int vel = 1 ;
+	int vel = 10;
 	int origenX = 1, origenY = 150;
 	String cadena, letrero;
 	boolean bandera = false;
 
+	boolean w,a,s,d = false; //movimiento
+
+
+
 	tronlike() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setLayout(null);
 		letrero = new String("Presione la flecha hacia arriba para iniciar..");
 		cadena = new String();
@@ -39,16 +44,19 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 	public void update(Graphics g) {
 		System.out.println("update");
 
-		g.clearRect(0, 0, 1200 , 1000); //limpiar actualizacion
+		g.clearRect(0, 0, 1200, 1000); // limpiar actualizacion
 
-		g.setColor(new Color(0,0,0)); //color de fondo
-		g.fillRect(0, 0, getWidth(), getHeight()); //color de fondo
+		g.setColor(new Color(0, 0, 0)); // color de fondo
+		g.fillRect(0, 0, getWidth(), getHeight()); // color de fondo
+		// Dibujar un marco azul alrededor de la ventana
+		g.setColor(new Color(0, 0, 255)); // Establecer el color del marco como azul (RGB: 0, 0, 255)
+		g.drawRect(85, 85, getWidth() - 100 ,getHeight() - 100); // Dibujar el rectángulo del marco
 
 		g.drawString(cadena, origenX, origenY);
 
 		Graphics2D g2d = (Graphics2D) g;
-		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-		g2d.setColor(new Color(255,81,0)); //Color Naranja al puntito
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		g2d.setColor(new Color(255, 81, 0)); // Color Naranja al puntito
 		g2d.fillOval(origenX, origenY, 30, 30); // tamaño de la bolita
 
 	}
@@ -71,7 +79,18 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 			try {
 				Thread.sleep(vel);
 				cadena = "contador = " + cont++;
-			//	origenX++; Mueve automaticamente
+				//origenX++;// Mueve automaticamente
+				if (w == true) {
+					origenY--;
+				} else if (a ==true) {
+					origenX --;
+				} else if (s == true) {
+					origenY ++;
+				} else if (d == true) {
+					origenX ++;
+				}
+
+
 			} catch (InterruptedException e) {
 				System.out.println("oh oh me molestan....");
 			}
@@ -84,13 +103,25 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 		System.out.println(ispress + "KEY PRESSED: ");
 		// 37 izq, 38 up, 39 right, 40 down
 		if (ispress.getKeyCode() == 87) { // w
-			origenY -= 20;
+			w = true;
+			a = false;
+			s = false; 
+			d = false;
 		} else if (ispress.getKeyCode() == 83) { // s
-			origenY += 20;
+			w = false;
+			a = false;
+			s = true; 
+			d = false;
 		} else if (ispress.getKeyCode() == 65) { // a
-			origenX -= 20;
+			w = false;
+			a = true;
+			s = false; 
+			d = false;
 		} else if (ispress.getKeyCode() == 68) { // d
-			origenX += 20;
+			w = false;
+			a = false;
+			s = false; 
+			d = true;
 		}
 	}
 
@@ -110,7 +141,7 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 		// Return the focus to the typing area.
 	}
 
-	//MUESTRA EL CÓDIGO DE CADA TECLA
+	// MUESTRA EL CÓDIGO DE CADA TECLA
 	private void displayInfo(KeyEvent e, String keyStatus) {
 
 		// You should only rely on the key char if the event
