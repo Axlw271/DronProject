@@ -22,12 +22,10 @@ public class menuFrame extends JFrame {
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Aquí puedes llamar a tu código principal para iniciar el juego
-                // En la clase Menu.java, dentro del ActionListener del botón "Iniciar Juego"
                 new Thread(() -> {
-                    tronlike.main(null);
+                    tronlike.main(null); //llamar juego
                 }).start();
-                dispose(); // Cierra el menú después de iniciar el juego
+                dispose(); //cerrar menú
             }
         });
 
