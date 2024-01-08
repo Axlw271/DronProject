@@ -8,6 +8,20 @@
             "type": "java",
             "name": "viborita",
             "request": "launch",
+            "mainClass": "SourcePackage.viborita",
+            "projectName": "DronProject_20a4efcf"
+        },
+        {
+            "type": "java",
+            "name": "menuFrame",
+            "request": "launch",
+            "mainClass": "SourcePackage.menuFrame",
+            "projectName": "DronProject_20a4efcf"
+        },
+        {
+            "type": "java",
+            "name": "viborita",
+            "request": "launch",
             "mainClass": "viborita",
             "projectName": "DronProject_20a4efcf"
         },

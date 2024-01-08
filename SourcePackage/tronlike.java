@@ -13,13 +13,13 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Color;
 
-public class viborita extends JFrame implements KeyListener, ActionListener {
+public class tronlike extends JFrame implements KeyListener, ActionListener {
 	int vel = 1 ;
 	int origenX = 1, origenY = 150;
 	String cadena, letrero;
 	boolean bandera = false;
 
-	viborita() {
+	tronlike() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		setLayout(null);
@@ -30,7 +30,7 @@ public class viborita extends JFrame implements KeyListener, ActionListener {
 	}
 
 	public static void main(String[] args) {
-		viborita vn = new viborita();
+		tronlike vn = new tronlike();
 		vn.setVisible(true);
 		vn.run();
 	}
