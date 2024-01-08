@@ -97,33 +97,48 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 	}
 
 	public void keyPressed(KeyEvent ispress) {
-		// origenX += 1;
 		System.out.println(ispress + "KEY PRESSED: ");
 		// 37 izq, 38 up, 39 right, 40 down
 		if (ispress.getKeyCode() == 87) { // w
+			if (s == true) {
+				//No moverse para atrás
+			} else {
 			w = true;
 			a = false;
 			s = false;
 			d = false;
 			origenY -= velbonus;
+			}
 		} else if (ispress.getKeyCode() == 83) { // s
-			w = false;
-			a = false;
-			s = true;
-			d = false;
-			origenY += velbonus;
+			if (w == true) {
+				//No moverse para atrás
+			} else {
+				w = false;
+				a = false;
+				s = true;
+				d = false;
+				origenY += velbonus;
+			}
 		} else if (ispress.getKeyCode() == 65) { // a
-			w = false;
-			a = true;
-			s = false;
-			d = false;
-			origenX -= velbonus;
+			if (d == true) {
+				//No moverse para atrás
+			} else {
+				w = false;
+				a = true;
+				s = false;
+				d = false;
+				origenX -= velbonus;
+			}
 		} else if (ispress.getKeyCode() == 68) { // d
-			w = false;
-			a = false;
-			s = false;
-			d = true;
-			origenX += velbonus; // Bonus de vel, cuando dejas presionado
+			if (a == true) {
+				//No moverse para atrás
+			} else {
+				w = false;
+				a = false;
+				s = false;
+				d = true;
+				origenX += velbonus; // Bonus de vel, cuando dejas presionado
+			}
 		}
 	}
 
