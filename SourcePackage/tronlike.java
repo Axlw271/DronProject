@@ -16,13 +16,12 @@ import java.awt.Color;
 
 public class tronlike extends JFrame implements KeyListener, ActionListener {
 	int vel = 10;
-	int origenX = 1, origenY = 150;
+	int velbonus = 3;
+	int origenX = 100, origenY = 550;
 	String cadena, letrero;
 	boolean bandera = false;
 
-	boolean w,a,s,d = false; //movimiento
-
-
+	boolean w, a, s, d = false; // movimiento
 
 	tronlike() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -50,7 +49,7 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 		g.fillRect(0, 0, getWidth(), getHeight()); // color de fondo
 		// Dibujar un marco azul alrededor de la ventana
 		g.setColor(new Color(0, 0, 255)); // Establecer el color del marco como azul (RGB: 0, 0, 255)
-		g.drawRect(85, 85, getWidth() - 100 ,getHeight() - 100); // Dibujar el rectángulo del marco
+		g.drawRect(85, 85, getWidth() - 100, getHeight() - 100); // Dibujar el rectángulo del marco
 
 		g.drawString(cadena, origenX, origenY);
 
@@ -79,17 +78,16 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 			try {
 				Thread.sleep(vel);
 				cadena = "contador = " + cont++;
-				//origenX++;// Mueve automaticamente
+				// origenX++;// Mueve automaticamente
 				if (w == true) {
 					origenY--;
-				} else if (a ==true) {
-					origenX --;
+				} else if (a == true) {
+					origenX--;
 				} else if (s == true) {
-					origenY ++;
+					origenY++;
 				} else if (d == true) {
-					origenX ++;
+					origenX++;
 				}
-
 
 			} catch (InterruptedException e) {
 				System.out.println("oh oh me molestan....");
@@ -99,29 +97,33 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 	}
 
 	public void keyPressed(KeyEvent ispress) {
-		origenX += 1;
+		// origenX += 1;
 		System.out.println(ispress + "KEY PRESSED: ");
 		// 37 izq, 38 up, 39 right, 40 down
 		if (ispress.getKeyCode() == 87) { // w
 			w = true;
 			a = false;
-			s = false; 
+			s = false;
 			d = false;
+			origenY -= velbonus;
 		} else if (ispress.getKeyCode() == 83) { // s
 			w = false;
 			a = false;
-			s = true; 
+			s = true;
 			d = false;
+			origenY += velbonus;
 		} else if (ispress.getKeyCode() == 65) { // a
 			w = false;
 			a = true;
-			s = false; 
+			s = false;
 			d = false;
+			origenX -= velbonus;
 		} else if (ispress.getKeyCode() == 68) { // d
 			w = false;
 			a = false;
-			s = false; 
+			s = false;
 			d = true;
+			origenX += velbonus; // Bonus de vel, cuando dejas presionado
 		}
 	}
 
