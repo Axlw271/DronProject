@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "tronlike",
+            "request": "launch",
+            "mainClass": "SourcePackage.tronlike",
+            "projectName": "DronProject_20a4efcf"
+        },
+        {
+            "type": "java",
             "name": "viborita",
             "request": "launch",
             "mainClass": "SourcePackage.viborita",
