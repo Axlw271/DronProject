@@ -1,9 +1,10 @@
+package SourcePackage;
+
 /*
  *  @author Axel Isidro Quiroz Avalos
  *  Fecha: 07/01/2024
  *  Notas: Este es el menú del juego.
  */
-package SourcePackage;
 
 import javax.swing.*;
 import java.awt.*;
@@ -51,7 +52,7 @@ public class menuFrame extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            new Menu();
+            new menuFrame();
         });
     }
 }
