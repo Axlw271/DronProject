@@ -21,11 +21,12 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 
 	tronlike() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		setLayout(null);
 		letrero = new String("Presione la flecha hacia arriba para iniciar..");
 		cadena = new String();
 		addKeyListener(this);
+		getContentPane().setBackground(Color.BLACK);
 		repaint();
 	}
 
@@ -37,14 +38,17 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 
 	public void update(Graphics g) {
 		System.out.println("update");
-		g.setColor(Color.black);
 
-		g.clearRect(0, 0, 12 , 10); //limpiar actualizacion
+		g.clearRect(0, 0, 1200 , 1000); //limpiar actualizacion
+
+		g.setColor(new Color(0,0,0)); //color de fondo
+		g.fillRect(0, 0, getWidth(), getHeight()); //color de fondo
+
 		g.drawString(cadena, origenX, origenY);
 
 		Graphics2D g2d = (Graphics2D) g;
-		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-				RenderingHints.VALUE_ANTIALIAS_ON);
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+		g2d.setColor(new Color(255,81,0)); //Color Naranja al puntito
 		g2d.fillOval(origenX, origenY, 30, 30); // tamaño de la bolita
 
 	}
