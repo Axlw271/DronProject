@@ -13,15 +13,17 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Color;
-
 public class tronlike extends JFrame implements KeyListener, ActionListener {
 	int vel = 10;
 	int velbonus = 3;
-	int origenX = 100, origenY = 550;
+	int origenX = 100, origenY = 550; //Point
 	String cadena, letrero;
 	boolean bandera = false;
+	boolean youLose = false; //vida
 
 	boolean w, a, s, d = false; // movimiento
+	Lista posX = new Lista();
+	Lista posY = new Lista();
 
 	tronlike() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -57,7 +59,12 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2d.setColor(new Color(255, 81, 0)); // Color Naranja al puntito
 		g2d.fillOval(origenX, origenY, 30, 30); // tamaño de la bolita
-
+		
+		Graphics2D gb2d = (Graphics2D) g;
+		
+		gb2d.fillRect(origenX,origenY,5,5);
+		
+		
 	}
 
 	public void paint(Graphics g) {
@@ -74,6 +81,7 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 		bandera = true;
 		System.out.println("en sus marcas...");
 		int cont = 0;
+
 		while (bandera) {
 			try {
 				Thread.sleep(vel);
