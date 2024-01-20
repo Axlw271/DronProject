@@ -30,8 +30,19 @@ class Lista {
             temp = temp.sig;
             contador++;
         }
-		throw new IndexOutOfBoundsException("La posición está fuera de rango"); //excepción
+		throw new IndexOutOfBoundsException("La posicón no existe"); //excepción
 	} 
+
+	public int getSize() {
+        int cont = 0;
+        Nodo temp = inicio;
+        while (temp != null) {
+            cont++;
+            temp = temp.sig;
+        }
+        return cont;
+    }
+
 	void print () {
 		inicio.print();
 	}

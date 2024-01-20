@@ -16,7 +16,7 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 	int origenX = 100, origenY = 550; //Point
 	String cadena, letrero;
 	boolean bandera = false;
-	boolean youLose = false; //vida
+	boolean uLose = false; //vida
 
 	boolean w, a, s, d = false; // movimiento
 	Lista posX = new Lista();
@@ -62,7 +62,9 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 		gb2d.fillRect(origenX,origenY,5,5);
 		gb2d.fillRect(origenX,origenY,40,5);
 		//un ciclo while?
-		for(int i = 0 ; i< 999999999 ; i++) {
+		
+		for (int i = 0; i<posX.getSize(); i++ ) {
+			gb2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 			gb2d.fillRect(posX.getValues(i),posY.getValues(i) , 5, 5);
 		}
 		
@@ -88,6 +90,8 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 				Thread.sleep(vel);
 				cadena = "contador = " + cont++;
 				// origenX++;// Mueve automaticamente
+				posX.addNodo(origenX);
+				posY.addNodo(origenY);
 				if (w == true) {
 					origenY--;
 				} else if (a == true) {
@@ -97,8 +101,7 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 				} else if (d == true) {
 					origenX++;
 				}
-				posX.addNodo(origenX);
-				posY.addNodo(origenY);
+				
 			} catch (InterruptedException e) {
 				System.out.println("oh oh me molestan....");
 			}
