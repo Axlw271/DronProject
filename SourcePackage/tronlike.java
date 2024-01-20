@@ -90,24 +90,15 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 				// origenX++;// Mueve automaticamente
 				if (w == true) {
 					origenY--;
-
-					//guardar posición
-					posY.addNodo(origenY);
 				} else if (a == true) {
 					origenX--;
-					//guardar posición
-					posX.addNodo(origenX);
 				} else if (s == true) {
 					origenY++;
-					//guardar posición
-					posY.addNodo(origenY);
 				} else if (d == true) {
 					origenX++;
-					//guardar posición
-					posX.addNodo(origenX);
-					System.out.println("Nodo nuevo");
 				}
-
+				posX.addNodo(origenX);
+				posY.addNodo(origenY);
 			} catch (InterruptedException e) {
 				System.out.println("oh oh me molestan....");
 			}
