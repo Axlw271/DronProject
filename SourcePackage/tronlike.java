@@ -1,7 +1,7 @@
 package SourcePackage;
 
 /*
-Programa realizado por: Karina Figueroa
+Programa realizado por: Karina Figueroa y Axel Quiroz
 */
 
 import javax.swing.JFrame;
@@ -61,7 +61,7 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 		gb2d.setColor(new Color(255,0,0));
 		gb2d.fillRect(origenX,origenY,5,5);
 		gb2d.fillRect(origenX,origenY,40,5);
-
+		//un ciclo while?
 		for(int i = 0 ; i< 999999999 ; i++) {
 			gb2d.fillRect(posX.getValues(i),posY.getValues(i) , 5, 5);
 		}
