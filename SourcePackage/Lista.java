@@ -4,23 +4,38 @@ class Lista {
 	//variables
 	Nodo inicio;
 	//constructores
-	Lista (Nodo n) {
-		this.inicio = n;
+	Lista (int n) {
+		this.inicio = new Nodo(n);
 	}   
 	Lista () {
 		this.inicio = null;
 	}
 
 	//métodos
-	void addNodo (Nodo n) {
+	void addNodo (int n) {
 		if (inicio != null) {
-			inicio.addFinal(n);			
+			inicio.addFinal(new Nodo(n));			
 		} else {
-			inicio = n;
+			inicio = new Nodo(n);
 		}
 	}
+	public int getValues(int posicion) {
+		Nodo temp = inicio;
+        int contador = 0;
+
+        while (temp != null) {
+            if (contador == posicion) {
+                return temp.x;
+            }
+            temp = temp.sig;
+            contador++;
+        }
+		throw new IndexOutOfBoundsException("La posición está fuera de rango"); //excepción
+	} 
 	void print () {
 		inicio.print();
 	}
+
+	
 
 }

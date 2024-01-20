@@ -3,10 +3,7 @@ package SourcePackage;
 /*
 Programa realizado por: Karina Figueroa
 */
-/*
- * Cosas pendientes
- * Hacer que al mover de arriba a abajo vaya recto, investigar porque sucede
- */
+
 import javax.swing.JFrame;
 import java.awt.event.*;
 import java.awt.Graphics;
@@ -33,7 +30,7 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 		cadena = new String();
 		addKeyListener(this);
 		getContentPane().setBackground(Color.BLACK);
-		repaint();
+		repaint(); 
 	}
 
 	public static void main(String[] args) {
@@ -43,9 +40,9 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 	}
 
 	public void update(Graphics g) {
-		System.out.println("update");
+	System.out.println("update");
 
-		g.clearRect(0, 0, 1200, 1000); // limpiar actualizacion
+		g.clearRect(0, 0, getWidth(), getHeight()); // limpiar actualizacion
 
 		g.setColor(new Color(0, 0, 0)); // color de fondo
 		g.fillRect(0, 0, getWidth(), getHeight()); // color de fondo
@@ -61,9 +58,13 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 		g2d.fillOval(origenX, origenY, 30, 30); // tamaño de la bolita
 		
 		Graphics2D gb2d = (Graphics2D) g;
-		
+		gb2d.setColor(new Color(255,0,0));
 		gb2d.fillRect(origenX,origenY,5,5);
-		
+		gb2d.fillRect(origenX,origenY,40,5);
+
+		for(int i = 0 ; i< 999999999 ; i++) {
+			gb2d.fillRect(posX.getValues(i),posY.getValues(i) , 5, 5);
+		}
 		
 	}
 
@@ -89,12 +90,22 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 				// origenX++;// Mueve automaticamente
 				if (w == true) {
 					origenY--;
+
+					//guardar posición
+					posY.addNodo(origenY);
 				} else if (a == true) {
 					origenX--;
+					//guardar posición
+					posX.addNodo(origenX);
 				} else if (s == true) {
 					origenY++;
+					//guardar posición
+					posY.addNodo(origenY);
 				} else if (d == true) {
 					origenX++;
+					//guardar posición
+					posX.addNodo(origenX);
+					System.out.println("Nodo nuevo");
 				}
 
 			} catch (InterruptedException e) {
@@ -105,7 +116,7 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 	}
 
 	public void keyPressed(KeyEvent ispress) {
-		System.out.println(ispress + "KEY PRESSED: ");
+		//System.out.println(ispress + "KEY PRESSED: ");
 		// 37 izq, 38 up, 39 right, 40 down
 		if (ispress.getKeyCode() == 87) { // w
 			if (s == true) {
@@ -183,6 +194,6 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 					+ KeyEvent.getKeyText(keyCode)
 					+ ")";
 		}
-		System.out.println("display" + e + keyStatus);
+		//System.out.println("display" + e + keyStatus);
 	}
 }

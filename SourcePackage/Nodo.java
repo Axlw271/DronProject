@@ -26,6 +26,10 @@ class Nodo {
 		if (this.sig != null)
 			sig.print();
 	}
+
+	int value () {
+		return x;
+	}
 	@Override
 	public String toString() {
 		return "nodo: " + x;
