@@ -13,14 +13,21 @@ import java.awt.Color;
 public class tronlike extends JFrame implements KeyListener, ActionListener {
 	int vel = 10;
 	int velbonus = 3;
+
 	int origenX = 100, origenY = 550; //Point
+	int enemcordX = 1884, enemcordY = 550; 
+	
 	String cadena, letrero;
 	boolean bandera = false;
 	boolean uLose = false; //vida
 
 	boolean w, a, s, d = false; // movimiento
+
 	Lista posX = new Lista();
 	Lista posY = new Lista();
+
+	Lista enemListaX = new Lista();
+	Lista enemListaY = new Lista();
 
 	tronlike() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -51,7 +58,7 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 		g.drawRect(85, 85, getWidth() - 100, getHeight() - 100); // Dibujar el rectángulo del marco
 
 		g.drawString(cadena, origenX, origenY);
-
+		//Player
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2d.setColor(new Color(255, 81, 0)); // Color Naranja al puntito
@@ -67,6 +74,18 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 			gb2d.fillRect(posX.getValues(i),posY.getValues(i) , 5, 5);
 		}
 		
+		//Enemigo
+		Graphics2D enemigo = (Graphics2D) g;
+		enemigo.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+		enemigo.setColor(new Color(0,0,200));
+		enemigo.fillOval(enemcordX, enemcordY, 30, 30);;
+		
+		for (int i = 0; i<enemListaX.getSize(); i++ ) {
+			enemigo.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+			enemigo.fillRect(enemListaX.getValues(i),enemListaY.getValues(i) , 5, 5);
+			enemigo.setColor(new Color(220,50,0));
+		}
+
 	}
 
 	public void paint(Graphics g) {
@@ -91,15 +110,26 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 				// origenX++;// Mueve automaticamente
 				posX.addNodo(origenX);
 				posY.addNodo(origenY);
-
+				enemListaX.addNodo(enemcordX);
+				enemListaY.addNodo(enemcordY);
 				if (w == true) {
-					origenY--;
+					origenY--;		
 				} else if (a == true) {
-					origenX--;
+					origenX--;			
 				} else if (s == true) {
-					origenY++;
+					origenY++;				
 				} else if (d == true) {
 					origenX++;
+				}
+
+				//Movimiento Enemigo
+				for(int i = 0; i < 1 ; i++) {
+					enemcordX = enemcordX -1;
+					
+				}
+				for(int i = 0; i < 1 ; i++) {
+					enemcordY = enemcordY -1;
+					
 				}
 
 			} catch (InterruptedException e) {
