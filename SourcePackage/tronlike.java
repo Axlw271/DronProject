@@ -106,7 +106,7 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 				System.out.println("oh oh me molestan....");
 			}
 			repaint();
-			isOver();
+			//isOver();
 		}
 	}
 
