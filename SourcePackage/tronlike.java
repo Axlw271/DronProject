@@ -61,7 +61,6 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 		gb2d.setColor(new Color(255,0,0));
 		gb2d.fillRect(origenX,origenY,5,5);
 		gb2d.fillRect(origenX,origenY,40,5);
-		//un ciclo while?
 		
 		for (int i = 0; i<posX.getSize(); i++ ) {
 			gb2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -92,6 +91,7 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 				// origenX++;// Mueve automaticamente
 				posX.addNodo(origenX);
 				posY.addNodo(origenY);
+
 				if (w == true) {
 					origenY--;
 				} else if (a == true) {
@@ -101,11 +101,12 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 				} else if (d == true) {
 					origenX++;
 				}
-				
+
 			} catch (InterruptedException e) {
 				System.out.println("oh oh me molestan....");
 			}
 			repaint();
+			isOver();
 		}
 	}
 
@@ -153,6 +154,20 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 				origenX += velbonus; // Bonus de vel, cuando dejas presionado
 			}
 		}
+	}
+
+	//Pantalla game over
+
+	public void isOver() {
+		//arreglar 
+			if (posX.isHere(origenX+1) == true && posY.isHere(origenY+1) == true) {
+				bandera = false;
+				new Thread(() -> {
+					menuFrame.main(null); //llamar a la ventana de incio
+				}).start();		
+				dispose();
+			}
+		
 	}
 
 	/** Handle the key released event from the text field. */

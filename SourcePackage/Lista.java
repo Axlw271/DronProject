@@ -36,7 +36,13 @@ class Lista {
         }
         return valores[posicion];
     } 
-
+    boolean isHere(int n) {
+        for (int i : valores) {
+            if (i == n)
+                return true;
+        }
+        return false;
+    }
     public int getSize() {
         return valores.length;
     }
