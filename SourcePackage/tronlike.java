@@ -127,10 +127,6 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 					enemcordX = enemcordX -1;
 					
 				}
-				for(int i = 0; i < 1 ; i++) {
-					enemcordY = enemcordY -1;
-					
-				}
 
 			} catch (InterruptedException e) {
 				System.out.println("oh oh me molestan....");

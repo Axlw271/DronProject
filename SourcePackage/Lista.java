@@ -3,7 +3,7 @@ package SourcePackage;
 class Lista {
     //variables
     Nodo inicio;
-    int[] valores; // almacenamos los valores en un array
+    int[] valores; //almacenar los valores en un array
     //constructores
     Lista (int n) {
         this.inicio = new Nodo(n);
@@ -21,17 +21,17 @@ class Lista {
 		} else {
 			inicio = new Nodo(n);
 		}
-		int[] nuevoArray = new int[valores.length + 1]; // creamos un nuevo array
+		int[] nuevoArray = new int[valores.length + 1]; 
 		for (int i = 0; i < valores.length; i++) {
-			nuevoArray[i] = valores[i]; // copiamos los elementos del array existente al nuevo array
+			nuevoArray[i] = valores[i]; //copiar los elementos del array 
 		}
-		nuevoArray[nuevoArray.length - 1] = n; // agregamos el nuevo valor al final del nuevo array
-		valores = nuevoArray; // actualizamos la referencia al array
+		nuevoArray[nuevoArray.length - 1] = n; 
+		valores = nuevoArray;
 	}
 
     public int getValues(int posicion) {
         if (posicion < 0 || posicion >= valores.length) {
-            throw new IndexOutOfBoundsException("La posicón no existe"); //excepción
+            throw new IndexOutOfBoundsException("La posicón no existe"); 
         }
         return valores[posicion];
     } 
