@@ -16,7 +16,6 @@ import java.awt.RenderingHints;
 import java.awt.Color;
 import java.awt.Font;
 
-
 public class tronlike extends JFrame implements KeyListener, ActionListener {
 	int vel = 10;
 	int valEnemigo = 10;
@@ -57,7 +56,7 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 
 	public void update(Graphics g) {
 		System.out.println("update");
-		
+
 		g.clearRect(0, 0, getWidth(), getHeight()); // limpiar actualizacion;
 
 		g.setColor(new Color(0, 0, 0)); // color de fondo
@@ -65,19 +64,19 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 		// Dibujar un marco azul alrededor de la ventana
 		g.setColor(new Color(0, 0, 255)); // Establecer el color del marco como azul (RGB: 0, 0, 255)
 		g.drawRect(85, 85, getWidth() - 100, getHeight() - 100); // Dibujar el rectángulo del marco
-		//titulo e instrucciones
+		// titulo e instrucciones
 		g.setColor(Color.YELLOW);
 		g.drawString(letrero, 400, 77);
-		Font nueva = new Font("Arial",Font.BOLD,50);
+		Font nueva = new Font("Arial", Font.BOLD, 50);
 		g.setColor(new Color(43, 0, 255));
 		g.setFont(nueva);
 		g.drawString(titulo, 20, 77);
-		
+
 		// Player
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2d.setColor(new Color(255, 81, 0)); // Color Naranja al puntito
-		// g2d.fillOval(origenX, origenY, 30, 30); // tamaño de la bolita
+		// g2d.fillOval(origenX-25, origenY-10, 30, 30); // tamaño de la bolita
 
 		Graphics2D gb2d = (Graphics2D) g;
 		gb2d.setColor(new Color(255, 0, 0));
@@ -145,7 +144,8 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 				}
 			}
 		};
-		Thread enemyMovementThread = new Thread(enemyMovementTask); // correr en hilos separados para que no vayan a la misma velocidad
+		Thread enemyMovementThread = new Thread(enemyMovementTask); // correr en hilos separados para que no vayan a la
+																	// misma velocidad
 		enemyMovementThread.start();
 		while (bandera) {
 			try {
@@ -229,32 +229,58 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 
 	// Pantalla game over
 	public void isOver() {
-		//Colisiones del marco
+		// Colisiones del marco
 		int frameX = 85;
-        int frameY = 85;
-        int frameWidth = getWidth() - 100;
-        int frameHeight = getHeight() - 100;
-
+		int frameY = 85;
+		int frameWidth = getWidth() - 20;
+		int frameHeight = getHeight() - 20;
+		//Colisiones trazo del player
 		for (int i = 0; i < posX.getSize(); i++) {
 			if (posX.getValues(i) == origenX && posY.getValues(i) == origenY) {
 				bandera = false;
-				new Thread(() -> {
-					tronlike.main(null); // llamar a la ventana de incio
-				}).start();
-				dispose();
+				reset();
 			}
 		}
-        if (origenX < frameX || origenX > frameWidth || origenY < frameY || origenY > frameHeight) {
-            bandera = false;
-			new Thread(() -> {
-				tronlike.main(null); // llamar a la ventana de incio
-			}).start();
-			dispose();
-        }
+		//Colisiones trazo del enemigo
+		for (int i = 0; i < enemListaX.getSize(); i++) {
+			if (enemListaX.getValues(i) == origenX && enemListaY.getValues(i) == origenY) {
+				bandera = false;
+				reset();
+			}
+		}
+		//Si el enemigo choca
+		//Consigo mismo
+		for (int i = 0; i < enemListaX.getSize(); i++) {
+			if (enemListaX.getValues(i) == enemcordX && enemListaY.getValues(i) == enemcordY) {
+				bandera = false;
+				reset();
+			}
+		}
+		//Con el trazo del player
+		for (int i = 0; i < posX.getSize(); i++) {
+			if (posX.getValues(i) == enemcordX && posY.getValues(i) == enemcordY) {
+				bandera = false;
+				reset();
+			}
+		}
+		//Con el marco
+		if (enemcordX < frameX || enemcordX > frameWidth || enemcordY < frameY || enemcordY > frameHeight) {
+			bandera = false;
+			reset();
+		}
+		// Colisiones al marco
+		if (origenX < frameX || origenX > frameWidth || origenY < frameY || origenY > frameHeight) {
+			bandera = false;
+			reset();
+		}
 	}
-	void checkCollision() {
-       
-    }
+
+	void reset() {
+		new Thread(() -> {
+			tronlike.main(null); // llamar a la ventana de incio
+		}).start();
+		dispose();
+	}
 
 	/** Handle the key released event from the text field. */
 	public void keyReleased(KeyEvent e) {
