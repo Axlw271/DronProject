@@ -8,10 +8,8 @@ Programa realizado por: Karina Figueroa y Axel Quiroz
 
 import javax.swing.JFrame;
 import java.awt.event.*;
-import java.io.File;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.Color;
 import java.awt.Font;
@@ -241,7 +239,7 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 				reset();
 			}
 		}
-		//Colisiones trazo del enemigo
+		//Colisiones del player con trazo del enemigo
 		for (int i = 0; i < enemListaX.getSize(); i++) {
 			if (enemListaX.getValues(i) == origenX && enemListaY.getValues(i) == origenY) {
 				bandera = false;
@@ -249,13 +247,6 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 			}
 		}
 		//Si el enemigo choca
-		//Consigo mismo
-		for (int i = 0; i < enemListaX.getSize(); i++) {
-			if (enemListaX.getValues(i) == enemcordX && enemListaY.getValues(i) == enemcordY) {
-				bandera = false;
-				reset();
-			}
-		}
 		//Con el trazo del player
 		for (int i = 0; i < posX.getSize(); i++) {
 			if (posX.getValues(i) == enemcordX && posY.getValues(i) == enemcordY) {
