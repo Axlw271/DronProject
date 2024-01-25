@@ -16,6 +16,7 @@ import java.awt.RenderingHints;
 import java.awt.Color;
 import java.awt.Font;
 
+
 public class tronlike extends JFrame implements KeyListener, ActionListener {
 	int vel = 10;
 	int valEnemigo = 10;
@@ -56,7 +57,7 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 
 	public void update(Graphics g) {
 		System.out.println("update");
-
+		
 		g.clearRect(0, 0, getWidth(), getHeight()); // limpiar actualizacion;
 
 		g.setColor(new Color(0, 0, 0)); // color de fondo
@@ -64,16 +65,14 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 		// Dibujar un marco azul alrededor de la ventana
 		g.setColor(new Color(0, 0, 255)); // Establecer el color del marco como azul (RGB: 0, 0, 255)
 		g.drawRect(85, 85, getWidth() - 100, getHeight() - 100); // Dibujar el rectángulo del marco
-		// titulo e instrucciones
-		if (Sprint == true) {
-			g.setColor(Color.YELLOW);
-			g.drawString(letrero, 400, 77);
-		}
-		Font nueva = new Font("Arial", Font.BOLD, 50);
+		//titulo e instrucciones
+		g.setColor(Color.YELLOW);
+		g.drawString(letrero, 400, 77);
+		Font nueva = new Font("Arial",Font.BOLD,50);
 		g.setColor(new Color(43, 0, 255));
 		g.setFont(nueva);
 		g.drawString(titulo, 20, 77);
-
+		
 		// Player
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -146,8 +145,7 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 				}
 			}
 		};
-		Thread enemyMovementThread = new Thread(enemyMovementTask); // correr en hilos separados para que no vayan a la
-																	// misma velocidad
+		Thread enemyMovementThread = new Thread(enemyMovementTask); // correr en hilos separados para que no vayan a la misma velocidad
 		enemyMovementThread.start();
 		while (bandera) {
 			try {
@@ -189,7 +187,6 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 				d = false;
 				space = false;
 				vel = 10;
-				// origenY -= velbonus;
 			}
 		} else if (ispress.getKeyCode() == 83) { // s
 			if (w == true) {
@@ -201,7 +198,6 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 				d = false;
 				space = false;
 				vel = 10;
-				// origenY += velbonus;
 			}
 		} else if (ispress.getKeyCode() == 65) { // a
 			if (d == true) {
@@ -213,7 +209,6 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 				d = false;
 				space = false;
 				vel = 10;
-				// origenX -= velbonus;
 			}
 		} else if (ispress.getKeyCode() == 68) { // d
 			if (a == true) {
@@ -225,7 +220,6 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 				d = true;
 				space = false;
 				vel = 10;
-				// origenX += velbonus; // Bonus de vel, cuando dejas presionado
 			}
 		} else if (ispress.getKeyCode() == 32) {
 			space = true;
@@ -235,6 +229,12 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 
 	// Pantalla game over
 	public void isOver() {
+		//Colisiones del marco
+		int frameX = 85;
+        int frameY = 85;
+        int frameWidth = getWidth() - 100;
+        int frameHeight = getHeight() - 100;
+
 		for (int i = 0; i < posX.getSize(); i++) {
 			if (posX.getValues(i) == origenX && posY.getValues(i) == origenY) {
 				bandera = false;
@@ -244,7 +244,17 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 				dispose();
 			}
 		}
+        if (origenX < frameX || origenX > frameWidth || origenY < frameY || origenY > frameHeight) {
+            bandera = false;
+			new Thread(() -> {
+				tronlike.main(null); // llamar a la ventana de incio
+			}).start();
+			dispose();
+        }
 	}
+	void checkCollision() {
+       
+    }
 
 	/** Handle the key released event from the text field. */
 	public void keyReleased(KeyEvent e) {
