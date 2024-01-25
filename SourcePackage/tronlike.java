@@ -10,18 +10,20 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Color;
+
 public class tronlike extends JFrame implements KeyListener, ActionListener {
 	int vel = 10;
+	int valEnemigo = 10;
 	int velbonus = 3;
+	boolean Sprint = false;
+	int origenX = 100, origenY = 550; // Point
+	int enemcordX = 1884, enemcordY = 550;
 
-	int origenX = 100, origenY = 550; //Point
-	int enemcordX = 1884, enemcordY = 550; 
-	
 	String cadena, letrero;
 	boolean bandera = false;
-	boolean uLose = false; //vida
+	boolean uLose = false; // vida
 
-	boolean w, a, s, d = false; // movimiento
+	boolean w, a, s, d, space = false; // movimiento
 
 	Lista posX = new Lista();
 	Lista posY = new Lista();
@@ -37,7 +39,7 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 		cadena = new String();
 		addKeyListener(this);
 		getContentPane().setBackground(Color.BLACK);
-		repaint(); 
+		repaint();
 	}
 
 	public static void main(String[] args) {
@@ -47,7 +49,7 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 	}
 
 	public void update(Graphics g) {
-	System.out.println("update");
+		System.out.println("update");
 
 		g.clearRect(0, 0, getWidth(), getHeight()); // limpiar actualizacion
 
@@ -59,32 +61,32 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 
 		g.drawString(cadena, origenX, origenY);
 		g.setColor(new Color(0, 0, 255));
-		//Player
+		// Player
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2d.setColor(new Color(255, 81, 0)); // Color Naranja al puntito
-	//	g2d.fillOval(origenX, origenY, 30, 30); // tamaño de la bolita
-		
+		// g2d.fillOval(origenX, origenY, 30, 30); // tamaño de la bolita
+
 		Graphics2D gb2d = (Graphics2D) g;
-		gb2d.setColor(new Color(255,0,0));
-		gb2d.fillRect(origenX,origenY,5,5);
-	//	gb2d.fillRect(origenX,origenY,40,5);
-		//Trazo del player
-		for (int i = 0; i<posX.getSize(); i++ ) {
+		gb2d.setColor(new Color(255, 0, 0));
+		gb2d.fillRect(origenX, origenY, 5, 5);
+		// gb2d.fillRect(origenX,origenY,40,5);
+		// Trazo del player
+		for (int i = 0; i < posX.getSize(); i++) {
 			gb2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-			gb2d.fillRect(posX.getValues(i),posY.getValues(i) , 5, 5);
+			gb2d.fillRect(posX.getValues(i), posY.getValues(i), 5, 5);
 		}
-		
-		//Enemigo
+
+		// Enemigo
 		Graphics2D enemigo = (Graphics2D) g;
-		enemigo.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-		enemigo.setColor(new Color(0,0,200));
-		//enemigo.fillOval(enemcordX, enemcordY, 30, 30);;
-		
-		for (int i = 0; i<enemListaX.getSize(); i++ ) {
+		enemigo.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		enemigo.setColor(new Color(0, 0, 200));
+		// enemigo.fillOval(enemcordX, enemcordY, 30, 30);;
+
+		for (int i = 0; i < enemListaX.getSize(); i++) {
 			enemigo.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-			enemigo.fillRect(enemListaX.getValues(i),enemListaY.getValues(i) , 5, 5);
-			enemigo.setColor(new Color(220,50,0));
+			enemigo.fillRect(enemListaX.getValues(i), enemListaY.getValues(i), 5, 5);
+			enemigo.setColor(new Color(220, 50, 0));
 		}
 
 	}
@@ -103,97 +105,118 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 		bandera = true;
 		System.out.println("en sus marcas...");
 		int cont = 0;
-	
+
+		Runnable enemyMovementTask = () -> {
+			while (bandera) {
+				try {
+					Thread.sleep(valEnemigo);
+					enemListaX.addNodo(enemcordX);
+					enemListaY.addNodo(enemcordY);
+					for(int i = 0; i < 1 ; i++) {
+						enemcordX = enemcordX -1;
+					}
+					repaint();
+				} catch (InterruptedException e) {
+					System.out.println("Enemigo derrotado");
+				}
+			}
+		};
+		Thread enemyMovementThread = new Thread(enemyMovementTask); //correr en hilos separados para que no vayan a la misma velocidad
+		enemyMovementThread.start();
 		while (bandera) {
 			try {
 				Thread.sleep(vel);
 				cadena = "contador = " + cont++;
-				// origenX++;// Mueve automaticamente
 				posX.addNodo(origenX);
 				posY.addNodo(origenY);
-				enemListaX.addNodo(enemcordX);
-				enemListaY.addNodo(enemcordY);
+
 				if (w == true) {
-					origenY--;		
+					origenY--;
 				} else if (a == true) {
-					origenX--;			
+					origenX--;
 				} else if (s == true) {
-					origenY++;				
+					origenY++;
 				} else if (d == true) {
 					origenX++;
 				}
 
-				//Movimiento Enemigo
-				for(int i = 0; i < 1 ; i++) {
-					enemcordX = enemcordX -1;
-					
+				repaint();
+				if (d == true || w == true || s == true || a == true) {
+					isOver();
 				}
 
 			} catch (InterruptedException e) {
 				System.out.println("oh oh me molestan....");
 			}
-			repaint();
-			if(d== true || w == true || s == true || a==true) {
-			isOver();
-			}
 		}
+		enemyMovementThread.interrupt();
 	}
 
 	public void keyPressed(KeyEvent ispress) {
-		//System.out.println(ispress + "KEY PRESSED: ");
+		// System.out.println(ispress + "KEY PRESSED: ");
 		// 37 izq, 38 up, 39 right, 40 down
 		if (ispress.getKeyCode() == 87) { // w
 			if (s == true) {
-				//No moverse para atrás
+				// No moverse para atrás
 			} else {
-			w = true;
-			a = false;
-			s = false;
-			d = false;
-			//origenY -= velbonus;
+				w = true;
+				a = false;
+				s = false;
+				d = false;
+				space = false;
+				vel = 10;
+				// origenY -= velbonus;
 			}
 		} else if (ispress.getKeyCode() == 83) { // s
 			if (w == true) {
-				//No moverse para atrás
+				// No moverse para atrás
 			} else {
 				w = false;
 				a = false;
 				s = true;
 				d = false;
-				//origenY += velbonus;
+				space = false;
+				vel = 10;
+				// origenY += velbonus;
 			}
 		} else if (ispress.getKeyCode() == 65) { // a
 			if (d == true) {
-				//No moverse para atrás
+				// No moverse para atrás
 			} else {
 				w = false;
 				a = true;
 				s = false;
 				d = false;
-				//origenX -= velbonus;
+				space = false;
+				vel = 10;
+				// origenX -= velbonus;
 			}
 		} else if (ispress.getKeyCode() == 68) { // d
 			if (a == true) {
-				//No moverse para atrás
+				// No moverse para atrás
 			} else {
 				w = false;
 				a = false;
 				s = false;
 				d = true;
-				//origenX += velbonus; // Bonus de vel, cuando dejas presionado
+				space = false;
+				vel = 10;
+				// origenX += velbonus; // Bonus de vel, cuando dejas presionado
 			}
+		} else if (ispress.getKeyCode() == 32) {
+			space = true;
+			vel = 8;
 		}
-		
 	}
 
-	//Pantalla game over
+	// Pantalla game over
 	public void isOver() {
 		for (int i = 0; i < posX.getSize(); i++) {
 			if (posX.getValues(i) == origenX && posY.getValues(i) == origenY) {
 				bandera = false;
 				new Thread(() -> {
-					tronlike.main(null); //llamar a la ventana de incio
-				}).start();		
+					tronlike.main(null); // llamar a la ventana de incio
+				}).start();
 				dispose();
 			}
 		}
@@ -232,6 +255,6 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 					+ KeyEvent.getKeyText(keyCode)
 					+ ")";
 		}
-		//System.out.println("display" + e + keyStatus);
+		// System.out.println("display" + e + keyStatus);
 	}
 }
