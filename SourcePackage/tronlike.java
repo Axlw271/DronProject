@@ -1,15 +1,20 @@
 package SourcePackage;
 
+import javax.imageio.ImageIO;
+
 /*
 Programa realizado por: Karina Figueroa y Axel Quiroz
 */
 
 import javax.swing.JFrame;
 import java.awt.event.*;
+import java.io.File;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.Color;
+import java.awt.Font;
 
 public class tronlike extends JFrame implements KeyListener, ActionListener {
 	int vel = 10;
@@ -19,7 +24,7 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 	int origenX = 100, origenY = 550; // Point
 	int enemcordX = 1884, enemcordY = 550;
 
-	String cadena, letrero;
+	String cadena, letrero, titulo;
 	boolean bandera = false;
 	boolean uLose = false; // vida
 
@@ -35,7 +40,8 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setLayout(null);
-		letrero = new String("Presione la flecha hacia arriba para iniciar..");
+		letrero = new String("¿CÓMO JUGAR? ==> Usa w,a,s,d para moverte. Usa la tecla espacio para activar turbo");
+		titulo = new String("THRONE GAME");
 		cadena = new String();
 		addKeyListener(this);
 		getContentPane().setBackground(Color.BLACK);
@@ -51,16 +57,23 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 	public void update(Graphics g) {
 		System.out.println("update");
 
-		g.clearRect(0, 0, getWidth(), getHeight()); // limpiar actualizacion
+		g.clearRect(0, 0, getWidth(), getHeight()); // limpiar actualizacion;
 
 		g.setColor(new Color(0, 0, 0)); // color de fondo
 		g.fillRect(0, 0, getWidth(), getHeight()); // color de fondo
 		// Dibujar un marco azul alrededor de la ventana
 		g.setColor(new Color(0, 0, 255)); // Establecer el color del marco como azul (RGB: 0, 0, 255)
 		g.drawRect(85, 85, getWidth() - 100, getHeight() - 100); // Dibujar el rectángulo del marco
+		// titulo e instrucciones
+		if (Sprint == true) {
+			g.setColor(Color.YELLOW);
+			g.drawString(letrero, 400, 77);
+		}
+		Font nueva = new Font("Arial", Font.BOLD, 50);
+		g.setColor(new Color(43, 0, 255));
+		g.setFont(nueva);
+		g.drawString(titulo, 20, 77);
 
-		g.drawString(cadena, origenX, origenY);
-		g.setColor(new Color(0, 0, 255));
 		// Player
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -74,7 +87,13 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 		// Trazo del player
 		for (int i = 0; i < posX.getSize(); i++) {
 			gb2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-			gb2d.fillRect(posX.getValues(i), posY.getValues(i), 5, 5);
+			gb2d.fillRect(posX.getValues(i), posY.getValues(i), 6, 6);
+		}
+		// detalle de la luz
+		for (int i = 0; i < posX.getSize(); i++) {
+			gb2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+			gb2d.setColor(new Color(255, 255, 255));
+			gb2d.fillRect(posX.getValues(i) + 2, posY.getValues(i) + 2, 1, 1);
 		}
 
 		// Enemigo
@@ -85,8 +104,14 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 
 		for (int i = 0; i < enemListaX.getSize(); i++) {
 			enemigo.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-			enemigo.fillRect(enemListaX.getValues(i), enemListaY.getValues(i), 5, 5);
+			enemigo.fillRect(enemListaX.getValues(i), enemListaY.getValues(i), 6, 6);
 			enemigo.setColor(new Color(220, 50, 0));
+		}
+		// detalle luz
+		for (int i = 0; i < posX.getSize(); i++) {
+			enemigo.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+			enemigo.setColor(new Color(255, 255, 255));
+			enemigo.fillRect(enemListaX.getValues(i) + 2, enemListaY.getValues(i) + 2, 1, 1);
 		}
 
 	}
@@ -94,11 +119,11 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 	public void paint(Graphics g) {
 		System.out.println("paint");
 
-		if (!bandera)
+		if (!bandera) {
 			g.drawString(letrero, origenX, origenY);
-		else
+		} else {
 			update(g);
-
+		}
 	}
 
 	public void run() {
@@ -112,8 +137,8 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 					Thread.sleep(valEnemigo);
 					enemListaX.addNodo(enemcordX);
 					enemListaY.addNodo(enemcordY);
-					for(int i = 0; i < 1 ; i++) {
-						enemcordX = enemcordX -1;
+					for (int i = 0; i < 1; i++) {
+						enemcordX = enemcordX - 1;
 					}
 					repaint();
 				} catch (InterruptedException e) {
@@ -121,7 +146,8 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 				}
 			}
 		};
-		Thread enemyMovementThread = new Thread(enemyMovementTask); //correr en hilos separados para que no vayan a la misma velocidad
+		Thread enemyMovementThread = new Thread(enemyMovementTask); // correr en hilos separados para que no vayan a la
+																	// misma velocidad
 		enemyMovementThread.start();
 		while (bandera) {
 			try {
@@ -139,12 +165,10 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 				} else if (d == true) {
 					origenX++;
 				}
-
 				repaint();
 				if (d == true || w == true || s == true || a == true) {
 					isOver();
 				}
-
 			} catch (InterruptedException e) {
 				System.out.println("oh oh me molestan....");
 			}
