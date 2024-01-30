@@ -16,9 +16,9 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 	int valEnemigo = 10;
 	int velbonus = 3;
 	boolean Sprint = false;
-	int origenX = 100, origenY = 400; // Jugador 1
-	int origenX2 = 1250, origenY2 = 400; // Jugador 2;
-	int enemcordX = 1250, enemcordY = 400;
+	int origenX = 88, origenY = 275; // Jugador 1
+	int origenX2 = 618, origenY2 = 275; // Jugador 2;
+	int enemcordX = 618, enemcordY = 275;
 
 	String cadena, letrero, titulo, letrero2, letrero3;
 	boolean bandera = false;
@@ -40,12 +40,11 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 
 	tronlike() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1280, 720);
+		setBounds(100, 100, 640, 480);
 		setLayout(null);
 		letrero = new String("¿CÓMO JUGAR? ==> Usa w,a,s,d para moverte. Usa la tecla espacio para activar turbo");
 		letrero2 = new String("JUGADOR 1 ==> Usa w,a,s,d para moverte. Usa la tecla espacio para activar turbo");
-		letrero3 = new String(
-				"JUGADOR 2 ==> Usa las flechas para moverte. Usa la tecla control derecho para activar turbo");
+		letrero3 = new String("JUGADOR 2 ==> Usa las flechas para moverte. Usa la tecla control derecho para activar turbo");
 		titulo = new String("THRONE GAME");
 		cadena = new String();
 		addKeyListener(this);
@@ -72,61 +71,65 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 
 		if (Globals.twoPlayers == true && Globals.level1 != true) {
 			g.setColor(Color.YELLOW);
-			g.drawString(letrero2, 400, 77);
-			g.drawString(letrero3, 400, 65);
-			Font nueva = new Font("Arial", Font.BOLD, 50);
+			g.drawString(letrero2, 90, 77);
+			g.drawString(letrero3, 90, 65);
+			Font nueva = new Font("Arial", Font.BOLD, 18);
 			g.setColor(new Color(43, 0, 255));
 			g.setFont(nueva);
-			g.drawString(titulo, 20, 77);
+			g.drawString("THRONE", 10, 110);
+			g.drawString("GAME", 20, 140);
 		} else {
 			g.setColor(Color.YELLOW);
-			g.drawString(letrero, 400, 77);
-			Font nueva = new Font("Arial", Font.BOLD, 50);
+			g.drawString(letrero, 90, 50);
+			Font nueva = new Font("Arial", Font.BOLD, 18);
 			g.setColor(new Color(43, 0, 255));
 			g.setFont(nueva);
-			g.drawString(titulo, 20, 77);
+			g.drawString("THRONE", 10, 110);
+			g.drawString("GAME", 20, 140);
 		}
 
 		Graphics2D message = (Graphics2D) g;
 		if (enemigo1 == false) {
-			Font fuenteF = new Font("Arial", Font.BOLD, 20);
+			Font fuenteF = new Font("Arial", Font.BOLD, 15);
 			message.setColor(Color.RED);
 			message.setFont(fuenteF);
-			message.drawString("Derrotaste a los enemigos presiona 'm' para regresar al menú", 500, 300);
+			message.drawString("Derrotaste a los enemigos presiona 'm' para regresar al menú", 100, 300);
 		}
 		// mensaje de perdiste
 		if (uLose == true && Globals.level1 != true && Globals.twoPlayers == true) {
-			Font fuenteL = new Font("Arial", Font.BOLD, 20);
+
+			Font fuenteL = new Font("Arial", Font.BOLD, 15);
 			message.setColor(Color.RED);
 			message.setFont(fuenteL);
-			message.drawString("Jugador 2 gana presiona 'n' para reiniciar el nivel", 500, 300);
+			message.drawString("Jugador 2 gana presiona 'n' para reiniciar el nivel", 100, 300);
+
 			bandera = false;
 		}
 		if (uLose == true && Globals.level1 == true && Globals.twoPlayers != true) {
-			Font fuenteL = new Font("Arial", Font.BOLD, 20);
+			Font fuenteL = new Font("Arial", Font.BOLD, 15);
 			message.setColor(Color.RED);
 			message.setFont(fuenteL);
-			message.drawString("Perdiste :( presiona 'n' para reiniciar el nivel", 500, 300);
+			message.drawString("Perdiste :( presiona 'n' para reiniciar el nivel", 100, 300);
 			bandera = false;
 		}
 
 		if (jug2 == false) {
-			Font fuenteL = new Font("Arial", Font.BOLD, 20);
+			Font fuenteL = new Font("Arial", Font.BOLD, 15);
 			message.setColor(Color.RED);
 			message.setFont(fuenteL);
-			message.drawString("Jugador 1 gana presiona 'n' para reiniciar el nivel", 500, 300);
+			message.drawString("Jugador 1 gana presiona 'n' para reiniciar el nivel", 100, 300);
 			bandera = false;
 		}
 
 		// Jugador
 		Graphics2D player = (Graphics2D) g;
-		player.setColor(new Color(255, 0, 0));
+		player.setColor(new Color(0, 102, 204));
 		player.fillRect(origenX, origenY, 5, 5);
 
 		// Trazo del player
 		for (int i = 0; i < posX.getSize() && i < posY.getSize(); i++) {
 			player.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-			player.fillRect(posX.getValues(i), posY.getValues(i), 6, 6);
+			player.fillRect(posX.getValues(i), posY.getValues(i), 5, 5);
 		}
 		// detalle de la luz
 		for (int i = 0; i < posX.getSize() && i < posY.getSize(); i++) {
@@ -138,13 +141,13 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 		// Jugador 2
 		if (Globals.twoPlayers == true) {
 			Graphics2D player2 = (Graphics2D) g;
-			player2.setColor(new Color(255, 0, 0));
+			player2.setColor(new Color(255, 128, 0));
 			player2.fillRect(origenX2, origenY2, 5, 5);
 
 			// Trazo del player 2
 			for (int i = 0; i < posX2.getSize() && i < posY2.getSize(); i++) {
 				player2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-				player2.fillRect(posX2.getValues(i), posY2.getValues(i), 6, 6);
+				player2.fillRect(posX2.getValues(i), posY2.getValues(i), 5, 5);
 			}
 			// detalle de la luz
 			for (int i = 0; i < posX2.getSize() && i < posY2.getSize(); i++) {
@@ -206,29 +209,27 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 
 					// set de movimientos del enemigo level 1
 					if (Globals.level1 == true) {
-						if (tiempo < 200) {
+						if (tiempo < 100) {
 							enemcordX--;
-						} else if (tiempo > 200 && tiempo < 300) {
-							enemcordY--;
-						} else if (tiempo > 300 && tiempo < 400) {
-							enemcordX--;
-						} else if (tiempo > 400 && tiempo < 550) {
+						} else if (tiempo > 100 && tiempo < 150) {
 							enemcordY++;
-						} else if (tiempo > 550 && tiempo < 800) {
+						} else if (tiempo > 150 && tiempo < 200) {
 							enemcordX++;
-						} else if (tiempo > 800 && tiempo < 950) {
+						} else if (tiempo > 200 && tiempo < 270) {
 							enemcordY++;
-						} else if (tiempo > 950 && tiempo < 1300) {
+						}else if (tiempo > 270 && tiempo < 350) {
 							enemcordX--;
-						} else if (tiempo > 1300 && tiempo < 1600) {
+						}else if (tiempo > 350 && tiempo < 400) {
+							enemcordY++;
+						}else if (tiempo > 400 && tiempo < 500) {
+							enemcordX--;
+						}else if (tiempo > 500 && tiempo < 520) {
 							enemcordY--;
-						} else if (tiempo > 1600 && tiempo < 1700) {
+						}else if (tiempo >520 && tiempo <800) {
 							enemcordX--;
-						} else if (tiempo > 1700 && tiempo < 1750) {
-							enemcordY++;
-						} else if (tiempo > 1750) {
-							enemcordX--;
-						} else if (tiempo == -1) {
+						}else if (tiempo > 800) {
+							enemcordY--;
+						}else if (tiempo == -1) {
 							enemcordX = 1260;
 							enemcordY = 680;
 						}
@@ -239,67 +240,50 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 				}
 			}
 		};
-		// correr en hilos diferentes para que tengan velocidades indpendientes
-		Thread enemyMovementThread = new Thread(enemyMovementTask);
-		enemyMovementThread.start();
-		// hilo jugador 2
-		Runnable player2MovementTask = () -> {
-			while (bandera) {
-				try {
-					Thread.sleep(valEnemigo);
-					posX2.addNodo(origenX2);
-					posY2.addNodo(origenY2);
 
-					if (arriba == true) {
-						origenY2--;
-					} else if (izquierda == true) {
-						origenX2--;
-					} else if (abajo == true) {
-						origenY2++;
-					} else if (derecha == true) {
-						origenX2++;
-					}
-					repaint();
+	// correr en hilos diferentes para que tengan velocidades indpendientes
+	Thread enemyMovementThread = new Thread(enemyMovementTask);enemyMovementThread.start();
+	// hilo jugador 2
+	Runnable player2MovementTask=()->{while(bandera){try{Thread.sleep(valEnemigo);posX2.addNodo(origenX2);posY2.addNodo(origenY2);
 
-					if (derecha == true || arriba == true || abajo == true || izquierda == true) {
-						isOverP2();
-					}
+	if(arriba==true){origenY2--;}else if(izquierda==true){origenX2--;}else if(abajo==true){origenY2++;}else if(derecha==true){origenX2++;}repaint();
 
-				} catch (InterruptedException e) {
-					System.out.println("Jugador2 derrotado");
-				}
+	if(derecha==true||arriba==true||abajo==true||izquierda==true){isOverP2();}
+
+	}catch(
+	InterruptedException e)
+	{
+		System.out.println("Jugador2 derrotado");
+	}}
+
+	};
+
+	Thread player2MovementThread = new Thread(player2MovementTask);player2MovementThread.start();
+
+	// Controles jugador 1
+	while(bandera)
+	{
+		try {
+			Thread.sleep(vel);
+			posX.addNodo(origenX);
+			posY.addNodo(origenY);
+			if (w == true) {
+				origenY--;
+			} else if (a == true) {
+				origenX--;
+			} else if (s == true) {
+				origenY++;
+			} else if (d == true) {
+				origenX++;
 			}
-
-		};
-
-		Thread player2MovementThread = new Thread(player2MovementTask);
-		player2MovementThread.start();
-
-		// Controles jugador 1
-		while (bandera) {
-			try {
-				Thread.sleep(vel);
-				posX.addNodo(origenX);
-				posY.addNodo(origenY);
-				if (w == true) {
-					origenY--;
-				} else if (a == true) {
-					origenX--;
-				} else if (s == true) {
-					origenY++;
-				} else if (d == true) {
-					origenX++;
-				}
-				repaint();
-				if (d == true || w == true || s == true || a == true) {
-					isOver();
-				}
-			} catch (InterruptedException e) {
-				System.out.println("oh oh me molestan....");
+			repaint();
+			if (d == true || w == true || s == true || a == true) {
+				isOver();
 			}
+		} catch (InterruptedException e) {
+			System.out.println("oh oh me molestan....");
 		}
-		enemyMovementThread.interrupt();
-		player2MovementThread.interrupt();
+	}enemyMovementThread.interrupt();player2MovementThread.interrupt();
 	}
 
 	public void keyPressed(KeyEvent ispress) {
@@ -421,14 +405,14 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 		for (int i = 0; i < posX.getSize(); i++) {
 			if (posX.getValues(i) == origenX && posY.getValues(i) == origenY) {
 				uLose = true;
-				System.out.println("Jugador1 chocó con su propio trazo");
+				//System.out.println("Jugador1 chocó con su propio trazo");
 
 			}
 		}
 		// Colisiones al marco jugador
 		if (origenX < frameX || origenX > frameWidth || origenY < frameY || origenY > frameHeight) {
 			uLose = true;
-			System.out.println("Jugador1 colisionó con el marco");
+		//	System.out.println("Jugador1 colisionó con el marco");
 
 		}
 
@@ -436,7 +420,7 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 			// Colisiones del player con trazo del enemigo
 			for (int i = 0; i < enemListaX.getSize(); i++) {
 				if (enemListaX.getValues(i) == origenX && enemListaY.getValues(i) == origenY) {
-					System.out.println("Jugador1 chocó con el trazo del enemigo");
+					//System.out.println("Jugador1 chocó con el trazo del enemigo");
 					uLose = true;
 				}
 			}
@@ -445,7 +429,7 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 			// El trazo del player
 			for (int i = 0; i < posX.getSize(); i++) {
 				if (posX.getValues(i) == enemcordX && posY.getValues(i) == enemcordY) {
-					System.out.println("Enemigo chocó con el trazo del player");
+					//System.out.println("Enemigo chocó con el trazo del player");
 					enemigo1 = false;
 				}
 			}
@@ -453,7 +437,7 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 			if (enemigo1 == true) { // comprobar que el enemigo esta habilitado
 				if (enemcordX < frameX || enemcordX > frameWidth || enemcordY < frameY || enemcordY > frameHeight) {
 					enemigo1 = false;
-					System.out.println("enemigo colisionó con el marco");
+					//System.out.println("enemigo colisionó con el marco");
 				}
 			}
 		}
@@ -474,12 +458,12 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 
 		if (origenX2 < frameX || origenX2 > frameWidth || origenY2 < frameY || origenY2 > frameHeight) {
 			jug2 = false;
-			System.out.println("Jugador2 colisionó con el marco");
+			//System.out.println("Jugador2 colisionó con el marco");
 		}
 		//
 		for (int i = 0; i < posX2.getSize(); i++) {
 			if (posX2.getValues(i) == origenX && posY2.getValues(i) == origenY) {
-				System.out.println("Jugador1 chocó con el trazo del Jugador2");
+				//System.out.println("Jugador1 chocó con el trazo del Jugador2");
 				uLose = true;
 			}
 		}
@@ -487,13 +471,13 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 			for (int i = 1; i < posY2.getSize(); i++) {
 				if (posX2.getValues(i) == origenX2 && posY2.getValues(i) == origenY2) {
 					jug2 = false;
-					System.out.println("Jugador2 chocó con su propio trazo");
+					//System.out.println("Jugador2 chocó con su propio trazo");
 				}
 			}
 		}
 		for (int i = 0; i < posX.getSize(); i++) {
 			if (posX.getValues(i) == origenX2 && posY.getValues(i) == origenY2) {
-				System.out.println("Jugador2 chocó con el trazo del player");
+				//System.out.println("Jugador2 chocó con el trazo del player");
 				jug2 = false;
 			}
 		}
