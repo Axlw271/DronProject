@@ -1,7 +1,4 @@
 package SourcePackage;
-
-import javax.imageio.ImageIO;
-
 /*
 Programa realizado por: Karina Figueroa y Axel Quiroz
 */
@@ -19,8 +16,8 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 	int valEnemigo = 10;
 	int velbonus = 3;
 	boolean Sprint = false;
-	int origenX = 100, origenY = 550; // Point
-	int enemcordX = 1884, enemcordY = 550;
+	int origenX = 100, origenY = 400; // Point
+	int enemcordX = 1250, enemcordY = 400;
 
 	String cadena, letrero, titulo;
 	boolean bandera = false;
@@ -36,7 +33,7 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 
 	tronlike() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setExtendedState(JFrame.MAXIMIZED_BOTH);
+		setBounds(100, 100, 1280, 720);
 		setLayout(null);
 		letrero = new String("¿CÓMO JUGAR? ==> Usa w,a,s,d para moverte. Usa la tecla espacio para activar turbo");
 		titulo = new String("THRONE GAME");
@@ -71,15 +68,13 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 		g.drawString(titulo, 20, 77);
 
 		// Player
-		Graphics2D g2d = (Graphics2D) g;
-		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		g2d.setColor(new Color(255, 81, 0)); // Color Naranja al puntito
-		// g2d.fillOval(origenX-25, origenY-10, 30, 30); // tamaño de la bolita
+		
+	
 
 		Graphics2D gb2d = (Graphics2D) g;
 		gb2d.setColor(new Color(255, 0, 0));
 		gb2d.fillRect(origenX, origenY, 5, 5);
-		// gb2d.fillRect(origenX,origenY,40,5);
+	
 		// Trazo del player
 		for (int i = 0; i < posX.getSize(); i++) {
 			gb2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -104,7 +99,7 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 			enemigo.setColor(new Color(220, 50, 0));
 		}
 		// detalle luz
-		for (int i = 0; i < posX.getSize(); i++) {
+		for (int i = 0; i < enemListaX.getSize(); i++) {
 			enemigo.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 			enemigo.setColor(new Color(255, 255, 255));
 			enemigo.fillRect(enemListaX.getValues(i) + 2, enemListaY.getValues(i) + 2, 1, 1);
@@ -116,7 +111,7 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 		System.out.println("paint");
 
 		if (!bandera) {
-			g.drawString(letrero, origenX, origenY);
+			g.drawString("", origenX, origenY);
 		} else {
 			update(g);
 		}
@@ -126,16 +121,25 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 		bandera = true;
 		System.out.println("en sus marcas...");
 		int cont = 0;
-
+		
 		Runnable enemyMovementTask = () -> {
+			int tiempo =0;
 			while (bandera) {
 				try {
 					Thread.sleep(valEnemigo);
+					tiempo ++;
 					enemListaX.addNodo(enemcordX);
 					enemListaY.addNodo(enemcordY);
-					for (int i = 0; i < 1; i++) {
-						enemcordX = enemcordX - 1;
+					if (tiempo < 100) {
+						enemcordX--;
+					} else if (tiempo < 100) {
+						enemcordX++;
+					}else if (tiempo < 100) {
+						enemcordY++;
+					}else if (tiempo > 100) {
+						enemcordY--;
 					}
+
 					repaint();
 				} catch (InterruptedException e) {
 					System.out.println("Enemigo derrotado");
@@ -232,29 +236,29 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 		int frameY = 85;
 		int frameWidth = getWidth() - 20;
 		int frameHeight = getHeight() - 20;
-		//Colisiones trazo del player
+		// Colisiones trazo del player
 		for (int i = 0; i < posX.getSize(); i++) {
 			if (posX.getValues(i) == origenX && posY.getValues(i) == origenY) {
 				bandera = false;
 				reset();
 			}
 		}
-		//Colisiones del player con trazo del enemigo
+		// Colisiones del player con trazo del enemigo
 		for (int i = 0; i < enemListaX.getSize(); i++) {
 			if (enemListaX.getValues(i) == origenX && enemListaY.getValues(i) == origenY) {
 				bandera = false;
 				reset();
 			}
 		}
-		//Si el enemigo choca
-		//Con el trazo del player
-		for (int i = 0; i < posX.getSize(); i++) {
+		// Si el enemigo choca
+		// Con el trazo del player
+		for (int i = 0; i < enemListaX.getSize(); i++) {
 			if (posX.getValues(i) == enemcordX && posY.getValues(i) == enemcordY) {
 				bandera = false;
 				reset();
 			}
 		}
-		//Con el marco
+		// Con el marco
 		if (enemcordX < frameX || enemcordX > frameWidth || enemcordY < frameY || enemcordY > frameHeight) {
 			bandera = false;
 			reset();
