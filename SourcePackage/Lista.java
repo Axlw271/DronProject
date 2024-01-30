@@ -35,13 +35,16 @@ class Lista {
         }
         return valores[posicion];
     } 
-    boolean isHere(int n) {
-        for (int i : valores) {
-            if (i == n)
-                return true;
+    
+    void clearList () {
+        Nodo temp = inicio;
+        while (temp != null) {
+            temp.remove();
+            temp = temp.sig;
         }
-        return false;
+        valores = new int[]{};
     }
+
     public int getSize() {
         return valores.length;
     }
@@ -77,7 +80,13 @@ class Nodo {
         if (this.sig != null)
             sig.print();
     }
-
+    void remove() {
+        if (this.sig != null) {
+            Nodo temp = this.sig;
+            this.x = temp.x;
+            this.sig = temp.sig;
+        }
+    }
     int value () {
         return x;
     }
