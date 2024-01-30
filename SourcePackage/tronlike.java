@@ -67,24 +67,21 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 		g.setFont(nueva);
 		g.drawString(titulo, 20, 77);
 
-		// Player
-		
-	
-
-		Graphics2D gb2d = (Graphics2D) g;
-		gb2d.setColor(new Color(255, 0, 0));
-		gb2d.fillRect(origenX, origenY, 5, 5);
+		//Jugador
+		Graphics2D player = (Graphics2D) g;
+		player.setColor(new Color(255, 0, 0));
+		player.fillRect(origenX, origenY, 5, 5);
 	
 		// Trazo del player
-		for (int i = 0; i < posX.getSize(); i++) {
-			gb2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-			gb2d.fillRect(posX.getValues(i), posY.getValues(i), 6, 6);
+		for (int i = 0; i < posX.getSize() && i<posY.getSize() ; i++) {
+			player.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+			player.fillRect(posX.getValues(i), posY.getValues(i), 6, 6);
 		}
 		// detalle de la luz
-		for (int i = 0; i < posX.getSize(); i++) {
-			gb2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-			gb2d.setColor(new Color(255, 255, 255));
-			gb2d.fillRect(posX.getValues(i) + 2, posY.getValues(i) + 2, 1, 1);
+		for (int i = 0; i < posX.getSize() && i<posY.getSize(); i++) {
+			player.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+			player.setColor(new Color(255, 255, 255));
+			player.fillRect(posX.getValues(i) + 2, posY.getValues(i) + 2, 1, 1);
 		}
 
 		// Enemigo
@@ -93,13 +90,13 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 		enemigo.setColor(new Color(0, 0, 200));
 		// enemigo.fillOval(enemcordX, enemcordY, 30, 30);;
 
-		for (int i = 0; i < enemListaX.getSize(); i++) {
+		for (int i = 0; i < enemListaX.getSize() && i<enemListaY.getSize(); i++) {
 			enemigo.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 			enemigo.fillRect(enemListaX.getValues(i), enemListaY.getValues(i), 6, 6);
 			enemigo.setColor(new Color(220, 50, 0));
 		}
 		// detalle luz
-		for (int i = 0; i < enemListaX.getSize(); i++) {
+		for (int i = 0; i < enemListaX.getSize() && i<enemListaY.getSize(); i++) {
 			enemigo.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 			enemigo.setColor(new Color(255, 255, 255));
 			enemigo.fillRect(enemListaX.getValues(i) + 2, enemListaY.getValues(i) + 2, 1, 1);
@@ -111,7 +108,7 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 		System.out.println("paint");
 
 		if (!bandera) {
-			g.drawString("", origenX, origenY);
+			g.drawString("Hola", origenX, origenY);
 		} else {
 			update(g);
 		}
@@ -120,7 +117,6 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 	public void run() {
 		bandera = true;
 		System.out.println("en sus marcas...");
-		int cont = 0;
 		
 		Runnable enemyMovementTask = () -> {
 			int tiempo =0;
@@ -130,15 +126,29 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 					tiempo ++;
 					enemListaX.addNodo(enemcordX);
 					enemListaY.addNodo(enemcordY);
-					if (tiempo < 100) {
-						enemcordX--;
-					} else if (tiempo < 100) {
-						enemcordX++;
-					}else if (tiempo < 100) {
-						enemcordY++;
-					}else if (tiempo > 100) {
+					if (tiempo < 200) {
+						enemcordX--; //left
+					} else if (tiempo > 200 && tiempo<300) {
 						enemcordY--;
-					}
+					} else if (tiempo >300 && tiempo<400) {
+						enemcordX--;
+					} else if (tiempo>400 && tiempo<550) {
+						enemcordY++;
+					} else if(tiempo > 550 && tiempo <800) {
+						enemcordX++;
+					} else if (tiempo >800 && tiempo<950) {
+						enemcordY ++;
+					} else if (tiempo >950 && tiempo<1300) {
+						enemcordX--;
+					} else if (tiempo >1300 && tiempo <1600) {
+						enemcordY--;
+					} else if (tiempo >1600 && tiempo< 1700) {
+						enemcordX--;
+					} else if (tiempo >1700 &&tiempo<1750) {
+						enemcordY++;
+					}  else if (tiempo >1750) {
+						enemcordX--;
+					} 
 
 					repaint();
 				} catch (InterruptedException e) {
@@ -152,10 +162,8 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 		while (bandera) {
 			try {
 				Thread.sleep(vel);
-				cadena = "contador = " + cont++;
 				posX.addNodo(origenX);
 				posY.addNodo(origenY);
-
 				if (w == true) {
 					origenY--;
 				} else if (a == true) {
@@ -236,7 +244,7 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 		int frameY = 85;
 		int frameWidth = getWidth() - 20;
 		int frameHeight = getHeight() - 20;
-		// Colisiones trazo del player
+		// Colision del player con su propio trazo
 		for (int i = 0; i < posX.getSize(); i++) {
 			if (posX.getValues(i) == origenX && posY.getValues(i) == origenY) {
 				bandera = false;
@@ -250,9 +258,9 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 				reset();
 			}
 		}
-		// Si el enemigo choca
-		// Con el trazo del player
-		for (int i = 0; i < enemListaX.getSize(); i++) {
+		// Si el enemigo 1 choca con...
+		// El trazo del player
+		for (int i = 0; i < posX.getSize(); i++) {
 			if (posX.getValues(i) == enemcordX && posY.getValues(i) == enemcordY) {
 				bandera = false;
 				reset();
@@ -263,7 +271,7 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 			bandera = false;
 			reset();
 		}
-		// Colisiones al marco
+		// Colisiones al marco jugador
 		if (origenX < frameX || origenX > frameWidth || origenY < frameY || origenY > frameHeight) {
 			bandera = false;
 			reset();
