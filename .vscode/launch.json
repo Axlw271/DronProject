@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "SourcePackage.Main",
+            "projectName": "DronProject_20a4efcf"
+        },
+        {
+            "type": "java",
             "name": "Lista",
             "request": "launch",
             "mainClass": "SourcePackage.Lista",
