@@ -23,6 +23,7 @@ public class Main extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Globals.level1=true;
+                Globals.twoPlayers=false;
                 new Thread(() -> {
                     tronlike.main(null); //llamar juego en otro hilo para no interferir
                 }).start();
@@ -35,6 +36,7 @@ public class Main extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Globals.twoPlayers=true;
+                Globals.level1 =false;
                 new Thread(() -> {
                     tronlike.main(null); //llamar juego en otro hilo para no interferir
                 }).start();
