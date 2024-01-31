@@ -319,10 +319,43 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 					} // end set movimiento enemigo
 
 					if (Globals.level2 == true) { // enemigos set movimiento nivel 2
-						if (tiempo < 1200) {
+						if (tiempo < 100) {
 							enemcordX1--;
 							enemcordX2--;
-						} else if (tiempo == -1) {
+						} else if (tiempo > 100 && tiempo < 150) {
+							enemcordY1--;
+							enemcordY2++;
+						} else if (tiempo > 150 && tiempo < 210) {
+							enemcordX1--;
+							enemcordY2++;
+						} else if (tiempo > 210 && tiempo < 240) {
+							enemcordY1++;
+							enemcordX2--;
+						}else if (tiempo > 240 && tiempo < 280) {
+							enemcordX1--;
+							enemcordX2--;
+						} else if (tiempo > 280 && tiempo < 320) {
+							enemcordY1++;
+							enemcordY2--;
+						}else if (tiempo > 320 && tiempo < 350) {
+							enemcordY1++;
+							enemcordX2++;
+						}else if (tiempo > 350 && tiempo < 375) {
+							enemcordX1--;
+							enemcordY2--;
+						}else if (tiempo > 375 && tiempo < 470) {
+							enemcordX1--;
+							enemcordX2--;
+						}else if (tiempo > 470 && tiempo < 500) {
+							enemcordX1--;
+							enemcordY2++;
+						}else if (tiempo > 500 && tiempo < 530) {
+							enemcordY1--;
+							enemcordX2--;
+						}else if (tiempo > 470) {
+							enemcordX1--;
+							enemcordY2--;
+						}else if (tiempo == -1) {
 							
 						}
 
@@ -527,8 +560,6 @@ public class tronlike extends JFrame implements KeyListener, ActionListener {
 			// System.out.println("Jugador1 colisionó con el marco");
 
 		}
-
-
 
 		if (Globals.level1 == true) { // verificar nivel
 			// Colisiones del player con trazo del enemigo
