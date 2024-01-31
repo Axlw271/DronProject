@@ -18,12 +18,13 @@ public class Main extends JFrame {
     }
 
     private void initUI() {
-        JButton startButton = new JButton("Iniciar Juego");
+        JButton startButton = new JButton("Nivel 1");
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Globals.level1=true;
                 Globals.twoPlayers=false;
+                Globals.level2 = false;
                 new Thread(() -> {
                     tronlike.main(null); //llamar juego en otro hilo para no interferir
                 }).start();
@@ -36,6 +37,21 @@ public class Main extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Globals.twoPlayers=true;
+                Globals.level1 =false;
+                Globals.level2 = false;
+                new Thread(() -> {
+                    tronlike.main(null); //llamar juego en otro hilo para no interferir
+                }).start();
+                dispose(); //cerrar menú
+            }
+        });
+
+        JButton level2Button = new JButton("Nivel 2");
+        level2Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Globals.level2 = true;
+                Globals.twoPlayers=false;
                 Globals.level1 =false;
                 new Thread(() -> {
                     tronlike.main(null); //llamar juego en otro hilo para no interferir
@@ -56,6 +72,7 @@ public class Main extends JFrame {
         panel.setLayout(new GridLayout(2, 1));
         panel.add(startButton);
         panel.add(twoPlayersButton);
+        panel.add(level2Button);
         panel.add(exitButton);
 
         add(panel);
